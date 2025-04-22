@@ -9,6 +9,13 @@ soong_namespace {
     ],
 }
 
+prebuilt_hidl_interfaces {
+    name: "hidl_tcmd_interface",
+    interfaces: [
+        "motorola.hardware.tcmd@1.0::IMotTcmd",
+    ],
+}
+
 install_symlink {
     name: "firmware_wlanmdsp.otaupdate_symlink",
     vendor: true,
