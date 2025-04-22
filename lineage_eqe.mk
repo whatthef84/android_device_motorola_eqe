@@ -27,3 +27,5 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="eqe_g-user 15 V1UMS35H.10-67-3-1 f758d4 release-keys" \
     BuildFingerprint=motorola/eqe_g/eqe:15/V1UMS35H.10-67-3-1/f758d4:user/release-keys \
     DeviceProduct=eqe_g
+
+TARGET_HAS_UDFPS := true
