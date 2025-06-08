@@ -2,7 +2,10 @@
 ## are from EQE_RETAIL_15_V1UMS35H.10-67-3-1.
 
 # Current blobs with ELF checks disabled:
+# audio.primary.crow.so depends on liblx-osal and vendor.qti.hardware.AGMIPC@1.0-impl, which are gnu makefile targets
+# libagm depends on libar-gsl, libats and liblx-osal, which are gnu makefile targets
 # libar-pal depends on libagmclient, which is a gnu makefile target
+# libmcs depends on libar-acdb, libats and liblx-osal, which are gnu makefile targets
 # libqc2audio_hwaudiocodec depends on libpalclient, which is a gnu makefile target
 
 # ACDB Data
@@ -44,6 +47,7 @@ vendor/bin/adsprpcd
 vendor/bin/loadalgo
 vendor/etc/init/vendor.qti.adsprpc-guestos-service.rc
 vendor/lib64/libadsp_default_listener.so
+vendor/lib64/libadsprpc.so
 vendor/lib64/libadspd.so
 vendor/lib64/libloadalgo_stub.so
 
@@ -85,10 +89,6 @@ vendor/lib/rfsa/adsp/libmctfengine_skel.so
 vendor/lib/rfsa/adsp/libworker_pool.so
 vendor/lib/rfsa/adsp/nlc.so
 
-# Audio AGM
-vendor/lib64/libagm.so
-vendor/lib64/vendor.qti.hardware.AGMIPC@1.0-impl.so
-
 # Audio - aualgo config
 vendor/etc/aualgo/ainr_tfv2.dat
 vendor/etc/aualgo/aualgo_comp_azs.conf
@@ -111,20 +111,14 @@ vendor/etc/usecaseKvManager.xml
 vendor/firmware/aw882xx_acf.bin
 
 # Audio libraries
-vendor/lib64/hw/audio.primary.crow.so
+vendor/lib64/hw/audio.primary.crow.so;DISABLE_CHECKELF
 vendor/lib64/libadm.so
-vendor/lib64/libadsprpc.so
-vendor/lib64/libar-acdb.so
-vendor/lib64/libar-gpr.so
-vendor/lib64/libar-gsl.so
+vendor/lib64/libagm.so;DISABLE_CHECKELF
 vendor/lib64/libar-pal.so;DISABLE_CHECKELF
-vendor/lib64/libats.so
 vendor/lib64/libaudio_log_utils.so
 vendor/lib64/libdapparamstorage.so
 vendor/lib64/libext_tflite_c.so
-vendor/lib64/liblx-ar_util.so
-vendor/lib64/liblx-osal.so
-vendor/lib64/libmcs.so
+vendor/lib64/libmcs.so;DISABLE_CHECKELF
 vendor/lib64/libqtigefar.so
 vendor/lib64/libspatializerparamstorage.so
 vendor/lib64/libvui_dmgr_client.so
@@ -139,17 +133,8 @@ vendor/etc/models/acd/speech.eai
 
 # Audio - soundfx
 vendor/lib64/soundfx/libasphere.so
-vendor/lib64/soundfx/libaudiopreprocessing.so
-vendor/lib64/soundfx/libbundlewrapper.so
-vendor/lib64/soundfx/libdownmix.so
-vendor/lib64/soundfx/libdynproc.so
-vendor/lib64/soundfx/libeffectproxy.so
-vendor/lib64/soundfx/libldnhncr.so
 vendor/lib64/soundfx/libquasar.so
-vendor/lib64/soundfx/libreverbwrapper.so
 vendor/lib64/soundfx/libshoebox.so
-vendor/lib64/soundfx/libspeakerbundle.so
-vendor/lib64/soundfx/libvisualizer.so
 
 # Bluetooth
 vendor/bin/hw/android.hardware.bluetooth@1.1-service-qti
@@ -158,9 +143,6 @@ vendor/etc/vintf/manifest/bttpi-saidl.xml
 vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so
 vendor/lib64/hw/android.hardware.bluetooth@1.1-impl-qti.so
 vendor/lib64/hw/vendor.qti.hardware.bttpi-impl.so
-vendor/lib64/lib_bt_aptx.so
-vendor/lib64/lib_bt_ble.so
-vendor/lib64/lib_bt_bundle.so
 vendor/lib64/libbtnv.so
 vendor/lib64/libsoc_helper.so
 vendor/lib64/vendor.qti.hardware.bttpi-V2-ndk.so
@@ -809,7 +791,9 @@ vendor/lib64/vendor.goodix.hardware.biometrics.fingerprint@2.1.so
 
 # Gatekeeper
 vendor/bin/hw/android.hardware.gatekeeper@1.0-service-qti
+vendor/bin/hw/android.hardware.gatekeeper@1.0-service-spu-qti
 vendor/etc/init/android.hardware.gatekeeper@1.0-service-qti.rc
+vendor/etc/init/android.hardware.gatekeeper@1.0-service-spu-qti.rc
 vendor/lib64/hw/android.hardware.gatekeeper@1.0-impl-qti.so
 
 # GNSS
@@ -904,7 +888,6 @@ vendor/firmware/a702_zap.b02
 vendor/firmware/a702_zap.elf
 vendor/firmware/a702_zap.mdt
 vendor/gpu/kbc/sequence_manifest.bin
-vendor/gpu/kbc/unified_kbcs_32.bin
 vendor/gpu/kbc/unified_kbcs_64.bin
 vendor/gpu/kbc/unified_ksqs.bin
 
@@ -1051,17 +1034,32 @@ vendor/bin/vendor_modprobe.sh
 
 # Keymaster
 vendor/bin/hw/android.hardware.keymaster@4.0-service-qti
+vendor/bin/KmInstallKeybox
+vendor/bin/KmValidateKeybox
+vendor/bin/StoreKeybox
 vendor/lib64/libkeymasterdeviceutils.so
 vendor/lib64/libkeymasterprovision.so
 vendor/lib64/libkeymasterutils.so
+vendor/lib64/liboemcrypto.so
 vendor/lib64/libqtikeymaster4.so
+vendor/lib64/libtpa.so
 
 # Keymint
 vendor/bin/hw/android.hardware.security.keymint-service-qti
+vendor/bin/hw/android.hardware.security.keymint-service-spu-qti
+vendor/bin/hw/android.hardware.security.keymint-service.strongbox-thales
 vendor/etc/init/android.hardware.security.keymint-service-qti.rc
+vendor/etc/init/android.hardware.security.keymint-service.strongbox-thales.rc
 vendor/etc/vintf/manifest/android.hardware.security.keymint-service-qti.xml
+vendor/lib64/libjc_keymint-thales.so
+vendor/lib64/libjc_keymint_transport-thales.so
+vendor/lib64/libjc_keymint_transport_thales.so
 vendor/lib64/libqtikeymint.so
 vendor/lib64/libspcom.so
+vendor/lib64/libspukeymint.so
+vendor/lib64/libspukeymintdeviceutils.so
+vendor/lib64/libspukeymintprovision.so
+vendor/lib64/libspukeymintutils.so
 
 # Listen
 vendor/lib64/libcapiv2svacnnvendor.so
@@ -1071,8 +1069,6 @@ vendor/lib64/libcapiv2uvvendor.so
 vendor/lib64/libeai_fixed.so
 vendor/lib64/libeai_float.so
 vendor/lib64/liblistensoundmodel2vendor.so
-vendor/lib64/vendor.qti.hardware.ListenSoundModel@1.0-impl.so
-vendor/lib64/vendor.qti.hardware.ListenSoundModel@1.0.so
 
 # Media
 system_ext/lib64/libmmosal.so
@@ -1398,60 +1394,59 @@ vendor/etc/init/dlsc.rc
 vendor/etc/init/qcrilNrd.rc
 vendor/etc/init/qms.rc
 vendor/etc/init/tlpd.rc
-vendor/etc/qcril_database/qcrilNr.db
-vendor/etc/qcril_database/upgrade/config/10.0_config.sql
-vendor/etc/qcril_database/upgrade/config/11.0_config.sql
-vendor/etc/qcril_database/upgrade/config/12.0_config.sql
-vendor/etc/qcril_database/upgrade/config/13.0_config.sql
-vendor/etc/qcril_database/upgrade/config/6.0_config.sql
-vendor/etc/qcril_database/upgrade/config/7.0_config.sql
-vendor/etc/qcril_database/upgrade/config/8.0_config.sql
-vendor/etc/qcril_database/upgrade/config/9.0_config.sql
-vendor/etc/qcril_database/upgrade/ecc/0_initial.sql
-vendor/etc/qcril_database/upgrade/ecc/10_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/11_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/12_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/13_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/14_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/15_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/16_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/17_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/18_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/19_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/20_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/21_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/22_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/23_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/24_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/25_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/26_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/27_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/28_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/29_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/30_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/31_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/33_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/34_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/35_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/36_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/37_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/38_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/39_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/3_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/40_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/41_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/42_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/43_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/44_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/4_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/5_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/6_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/7_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/8_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/ecc/9_version_qcrildb.sql
-vendor/etc/qcril_database/upgrade/other/2_version_add_wps_config_qcrilnr.sql
-vendor/etc/qcril_database/upgrade/other/3_version_update_wps_config_qcrilnr.sql
-vendor/etc/qcril_database/upgrade/other/6_version_change_property_table_qcrilnr.sql
+vendor/etc/qcril_database/upgrade/config/10.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/config/11.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/config/12.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/config/13.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/config/6.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/config/7.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/config/8.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/config/9.0_config.sql;FILEGROUP=proprietary_rildb_config_sql_files
+vendor/etc/qcril_database/upgrade/ecc/0_initial.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/10_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/11_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/12_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/13_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/14_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/15_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/16_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/17_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/18_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/19_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/20_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/21_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/22_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/23_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/24_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/25_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/26_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/27_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/28_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/29_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/30_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/31_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/33_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/34_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/35_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/36_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/37_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/38_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/39_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/3_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/40_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/41_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/42_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/43_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/44_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/4_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/5_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/6_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/7_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/8_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/ecc/9_version_qcrildb.sql;FILEGROUP=proprietary_rildb_ecc_sql_files
+vendor/etc/qcril_database/upgrade/other/2_version_add_wps_config_qcrilnr.sql;FILEGROUP=proprietary_rildb_other_sql_files
+vendor/etc/qcril_database/upgrade/other/3_version_update_wps_config_qcrilnr.sql;FILEGROUP=proprietary_rildb_other_sql_files
+vendor/etc/qcril_database/upgrade/other/6_version_change_property_table_qcrilnr.sql;FILEGROUP=proprietary_rildb_other_sql_files
 vendor/etc/seccomp_policy/qcrilnr@2.0.policy
 vendor/etc/seccomp_policy/qms.policy
 vendor/etc/telephony_packages.xml
@@ -1766,6 +1761,12 @@ vendor/firmware/vpu30_4v_16mb_unsigned.mbn
 vendor/firmware/vpu30_4v_unsigned.mbn
 vendor/firmware/vpu33_4v.mbn
 vendor/firmware/vpu33_4v_unsigned.mbn
+
+# Weaver
+vendor/bin/hw/android.hardware.weaver-service-spu-qti
+vendor/bin/hw/android.hardware.weaver@1.0-service-thales
+vendor/etc/init/android.hardware.weaver@1.0-service-thales.rc
+vendor/lib64/ese_weaver_thales.so
 
 # Widevine DRM
 vendor/bin/hw/android.hardware.drm-service.widevine

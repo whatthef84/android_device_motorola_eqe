@@ -51,8 +51,13 @@ lib_fixups: lib_fixups_user_type = {
         'vendor.qti.qspmhal@1.0',
     ): lib_fixup_vendor_suffix,
     (
+        'libar-acdb',
+        'libar-gsl',
+        'liblx-osal',
+        'libats',
         'libagmclient',
         'libpalclient',
+        'vendor.qti.hardware.AGMIPC@1.0-impl',
     ): lib_fixup_remove,
 }
 
@@ -71,8 +76,15 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('android.hidl.base@1.0.so', 'libhidlbase.so'),
     'system_ext/lib64/libwfdservice.so': blob_fixup()
         .replace_needed('android.media.audio.common.types-V2-cpp.so', 'android.media.audio.common.types-V4-cpp.so'),
-    ('vendor/bin/hw/android.hardware.security.keymint-service-qti', 'vendor/lib64/libqtikeymint.so'): blob_fixup()
+    (
+        'vendor/bin/hw/android.hardware.security.keymint-service-qti',
+        'vendor/bin/hw/android.hardware.security.keymint-service-spu-qti',
+        'vendor/lib64/libqtikeymint.so',
+        'vendor/lib64/libspukeymint.so',
+    ): blob_fixup()
         .add_needed('android.hardware.security.rkp-V3-ndk.so'),
+    'vendor/lib64/libtpa.so': blob_fixup()
+        .replace_needed('android.hardware.security.keymint-V1-ndk.so', 'android.hardware.security.keymint-V4-ndk.so'),
     ('vendor/etc/media_codecs_crow_v0.xml', 'vendor/etc/media_codecs_crow_v1.xml', 'vendor/etc/media_codecs_crow_v2.xml'): blob_fixup()
         .regex_replace('.*media_codecs_(google_audio|google_c2|google_telephony|google_video|vendor_audio).*\n', ''),
     'vendor/etc/seccomp_policy/qwesd@2.0.policy': blob_fixup()
@@ -86,13 +98,6 @@ blob_fixups: blob_fixups_user_type = {
         .add_needed('libgui_shim_vendor.so'),
     ('vendor/lib64/sensors.moto.so', 'vendor/lib64/nfc_nci.nqx.default.hw.so'): blob_fixup()
         .add_needed('libbase_shim.so'),
-    (
-        'vendor/lib64/libqcrilNr.so',
-        'vendor/lib64/libril-db.so',
-    ): blob_fixup().binary_regex_replace(
-        rb'persist\.vendor\.radio\.poweron_opt',
-        rb'persist.vendor.radio.poweron_ign',
-    ),
 }  # fmt: skip
 
 extract_fns: extract_fns_user_type = {
